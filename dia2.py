@@ -7,7 +7,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 
 # Read the dataset
-df = pd.read_csv('C:/Users/manoj/Desktop/diabets/dia.csv')
+df = pd.read_csv('path to save the trained file/dia.csv')
 
 # Display the first few rows of the DataFrame
 print(df.head())
