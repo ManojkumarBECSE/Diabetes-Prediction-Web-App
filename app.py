@@ -5,7 +5,7 @@ from sklearn.ensemble import RandomForestClassifier
 app = Flask(__name__)
 
 # Load the dataset
-df = pd.read_csv('C:/Users/manoj/Desktop/diabets/dia.csv')
+df = pd.read_csv('path/dia.csv')
 
 # Preprocessing and model training
 x = df.iloc[:, df.columns != 'Outcome']
