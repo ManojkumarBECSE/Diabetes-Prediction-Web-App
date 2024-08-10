@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Diabetes Prediction Web App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        input {
+            padding: 8px;
+            margin-bottom: 10px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            opacity: 0; /* Initially hide the result */
+            transition: opacity 0.5s ease-in-out;
+        }
+        .show-result {
+            opacity: 1;
+        }
+        .error {
+            margin-top: 20px;
+            text-align: center;
+            color: red;
+            font-weight: bold;
+        }
+        .preloader-container {
+            display: none; /* Initially hidden */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        .preloader {
+            width: 100%; /* Adjust the size as needed */
+        }
+    </style>
+    <script>
+        function showPreloader(event) {
+            event.preventDefault(); // Prevent the form from submitting immediately
+            document.getElementById('preloader-container').style.display = 'flex';
+
+            // Delay the form submission by 3 seconds
+            setTimeout(function() {
+                event.target.submit();
+            }, 3000);
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Diabetes Prediction Web App</h1>
+        <form method="POST" action="/predict" onsubmit="showPreloader(event)">
+            <label for="glucose">Glucose Level:</label>
+            <input type="text" id="glucose" name="glucose">
+
+            <label for="blood_pressure">Blood Pressure:</label>
+            <input type="text" id="blood_pressure" name="blood_pressure">
+
+            <label for="Pregnancies">Pregnancies:</label>
+            <input type="text" id="Pregnancies" name="Pregnancies">
+
+            <label for="SkinThickness">Skin Thickness:</label>
+            <input type="text" id="SkinThickness" name="SkinThickness">
+
+            <label for="Insulin">Insulin:</label>
+            <input type="text" id="Insulin" name="Insulin">
+
+            <label for="BMI">BMI:</label>
+            <input type="text" id="BMI" name="BMI">
+
+            <label for="DiabetesPedigreeFunction">Diabetes Pedigree Function:</label>
+            <input type="text" id="DiabetesPedigreeFunction" name="DiabetesPedigreeFunction">
+
+            <label for="Age">Age:</label>
+            <input type="text" id="Age" name="Age">
+
+            <button type="submit">Predict</button>
+        </form>
+        <div id="preloader-container" class="preloader-container">
+            <img src="{{ url_for('static', filename='images/animation.gif') }}" alt="Loading..." class="preloader">
+        </div>
+        <div class="result {{ 'show-result' if prediction_result else '' }}">
+            {% if prediction_result %}
+            <p>Prediction: {{ prediction_result }}</p>
+            {% if prediction_result == "Diabetes" %}
+            <audio autoplay>
+                <source src="{{ url_for('static', filename='audio/diabetes.mp3') }}" type="audio/mp3">
+            </audio>
+            {% else %}
+            <audio autoplay>
+                <source src="{{ url_for('static', filename='audio/no_diabetes.mp3') }}" type="audio/mp3">
+            </audio>
+            {% endif %}
+            {% endif %}
+        </div>
+        {% if error %}
+        <div class="error">
+            <p>{{ error }}</p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
