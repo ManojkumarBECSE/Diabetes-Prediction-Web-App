@@ -24,8 +24,8 @@ This project is a web application for predicting diabetes using machine learning
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/diabetes-prediction-webapp.git
-cd diabetes-prediction-webapp
+[git clone https://github.com/yourusername/diabetes-prediction-webapp.git
+cd diabetes-prediction-webapp](https://github.com/ManojkumarBECSE/Diabetes-Prediction-Web-App.git)
 ```
 
 2. Install the required packages:
